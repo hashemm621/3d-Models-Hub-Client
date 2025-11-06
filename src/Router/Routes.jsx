@@ -9,6 +9,8 @@ import UpdateModel from "../Pages/UpdateModel";
 import Login from "../Pages/Login";
 import Registration from "../Pages/Registration";
 import PrivateRoute from "./PrivateRoute";
+import MyModels from "../Pages/MyModels";
+import MyDownloads from "../Pages/MyDownloads";
 
 const router = createBrowserRouter([
   {
@@ -48,8 +50,22 @@ const router = createBrowserRouter([
             <ModelDetails />
           </PrivateRoute>
         ),
-        loader: ({ params }) =>
-          fetch(`http://localhost:3000/models/${params.id}`),
+      },
+      {
+        path: "my-models",
+        element: (
+          <PrivateRoute>
+            <MyModels />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-downloads",
+        element: (
+          <PrivateRoute>
+            <MyDownloads/>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/update-model/:id",

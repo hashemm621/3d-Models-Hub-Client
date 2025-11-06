@@ -3,7 +3,6 @@ import { ModelCard } from "../Components/ModelCard";
 
 const AllModels = () => {
   const data = useLoaderData();
-  console.log(data);
 
   return (
     <div>

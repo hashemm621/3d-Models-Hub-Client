@@ -47,6 +47,16 @@ const NavBar = () => {
                 <IoLogoModelS /> All Models
               </NavLink>
             </li>
+            <li>
+            <NavLink to={"/add-model"}>
+             <ImBoxAdd /> Add model
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={"/my-models"}>
+             <ImBoxAdd /> My-Models
+            </NavLink>
+          </li>
           </ul>
         </div>
         <Link to={"/"} className="flex items-center gap-1 text-xl font-bold">
@@ -69,6 +79,11 @@ const NavBar = () => {
           <li>
             <NavLink to={"/add-model"}>
              <ImBoxAdd /> Add model
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={"/my-models"}>
+             <ImBoxAdd /> My Models
             </NavLink>
           </li>
 {/* 
@@ -108,6 +123,11 @@ const NavBar = () => {
                   <FaUser /> Profile
                 </Link>
               </li>
+              <li>
+            <NavLink to={"/my-downloads"}>
+             <ImBoxAdd /> My DownLoads
+            </NavLink>
+          </li>
               <li>
                 <a>
                   {" "}
