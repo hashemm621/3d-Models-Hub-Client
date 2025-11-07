@@ -9,11 +9,14 @@ const MyModels = () => {
   console.log(models);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/my-models?email=${user.email}`, {
-      headers: {
-        authorization: `Bearer ${user.accessToken}`,
-      },
-    })
+    fetch(
+      `https://3d-model-server-orcin.vercel.app/my-models?email=${user.email}`,
+      {
+        headers: {
+          authorization: `Bearer ${user.accessToken}`,
+        },
+      }
+    )
       .then(res => res.json())
       .then(data => {
         setModels(data);

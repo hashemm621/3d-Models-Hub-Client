@@ -6,23 +6,36 @@ import { FaGear, FaUser } from "react-icons/fa6";
 import { LuRotate3D } from "react-icons/lu";
 import { ImBoxAdd } from "react-icons/im";
 import { AuthContext } from "../Context/AuthContext";
-import { useContext } from "react";
-
+import { useContext, useEffect, useState } from "react";
 
 const NavBar = () => {
   const { user, signOutUser } = useContext(AuthContext);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    const html = document.querySelector("html");
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const handleTheme = checked => {
+    setTheme(checked ? "dark" : "light");
+  };
+
   return (
     <div className="navbar py-0 min-h-0 z-1 shadow-sm rounded-full glass-card max-w-7xl">
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost md:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
+              stroke="currentColor">
               {" "}
               <path
                 strokeLinecap="round"
@@ -34,8 +47,7 @@ const NavBar = () => {
           </div>
           <ul
             tabIndex="-1"
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-          >
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
             <li>
               <NavLink to={"/"}>
                 <GoHomeFill />
@@ -48,18 +60,20 @@ const NavBar = () => {
               </NavLink>
             </li>
             <li>
-            <NavLink to={"/add-model"}>
-             <ImBoxAdd /> Add model
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={"/my-models"}>
-             <ImBoxAdd /> My-Models
-            </NavLink>
-          </li>
+              <NavLink to={"/add-model"}>
+                <ImBoxAdd /> Add model
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/my-models"}>
+                <ImBoxAdd /> My-Models
+              </NavLink>
+            </li>
           </ul>
         </div>
-        <Link to={"/"} className="flex items-center gap-1 text-xl font-bold">
+        <Link
+          to={"/"}
+          className="flex items-center gap-1 text-xl font-bold">
           <LuRotate3D /> 3D Models Hub
         </Link>
       </div>
@@ -78,15 +92,15 @@ const NavBar = () => {
           </li>
           <li>
             <NavLink to={"/add-model"}>
-             <ImBoxAdd /> Add model
+              <ImBoxAdd /> Add model
             </NavLink>
           </li>
           <li>
             <NavLink to={"/my-models"}>
-             <ImBoxAdd /> My Models
+              <ImBoxAdd /> My Models
             </NavLink>
           </li>
-{/* 
+          {/* 
           <li>
             <NavLink to={"/profile"}>
               <FaUser /> Profile
@@ -100,20 +114,21 @@ const NavBar = () => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
+              className="btn btn-ghost btn-circle avatar">
               <div className="w-9 border-2 border-gray-300 rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
                   referrerPolicy="no-referrer"
-                  src={user.photoURL || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+                  src={
+                    user.photoURL ||
+                    "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  }
                 />
               </div>
             </div>
             <ul
               tabIndex="-1"
-              className="menu  menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
-            >
+              className="menu  menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow">
               <div className=" pb-3 border-b border-b-gray-200">
                 <li className="text-sm font-bold">{user.displayName}</li>
                 <li className="text-xs">{user.email}</li>
@@ -124,21 +139,21 @@ const NavBar = () => {
                 </Link>
               </li>
               <li>
-            <NavLink to={"/my-downloads"}>
-             <ImBoxAdd /> My DownLoads
-            </NavLink>
-          </li>
-              <li>
-                <a>
-                  {" "}
-                  <FaGear /> Settings
-                </a>
+                <NavLink to={"/my-downloads"}>
+                  <ImBoxAdd /> My DownLoads
+                </NavLink>
               </li>
+              <input
+                onChange={e => handleTheme(e.target.checked)}
+                type="checkbox"
+                defaultChecked={localStorage.getItem("theme") === "dark"}
+                className="toggle"
+              />
+
               <li>
                 <button
                   onClick={signOutUser}
-                  className="btn btn-xs text-left bg-linear-to-r from-pink-500 to-red-500 text-white"
-                >
+                  className="btn btn-xs text-left bg-linear-to-r from-pink-500 to-red-500 text-white">
                   <IoLogOut /> Logout
                 </button>
               </li>
@@ -147,8 +162,7 @@ const NavBar = () => {
         ) : (
           <Link
             to={"/auth/login"}
-            className="btn rounded-full border-gray-300  btn-sm bg-linear-to-r from-pink-500 to-red-500 text-white"
-          >
+            className="btn rounded-full border-gray-300  btn-sm bg-linear-to-r from-pink-500 to-red-500 text-white">
             {" "}
             <IoLogIn /> Login
           </Link>

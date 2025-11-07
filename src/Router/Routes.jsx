@@ -20,12 +20,13 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        loader: () => fetch("http://localhost:3000/latest-models"),
+        loader: () =>
+          fetch("https://3d-model-server-orcin.vercel.app/latest-models"),
       },
       {
         path: "/all-models",
         element: <AllModels />,
-        loader: () => fetch("http://localhost:3000/models"),
+        loader: () => fetch("https://3d-model-server-orcin.vercel.app/models"),
       },
       {
         path: "/profile",
@@ -63,7 +64,7 @@ const router = createBrowserRouter([
         path: "my-downloads",
         element: (
           <PrivateRoute>
-            <MyDownloads/>
+            <MyDownloads />
           </PrivateRoute>
         ),
       },
@@ -75,7 +76,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/models/${params.id}`),
+          fetch(`https://3d-model-server-orcin.vercel.app/models/${params.id}`),
       },
       {
         path: "/auth/login",

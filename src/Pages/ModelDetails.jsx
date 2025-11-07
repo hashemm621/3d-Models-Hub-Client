@@ -10,12 +10,12 @@ const ModelDetails = () => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
-  const [refetch, setRefetch] = useState(false)
+  const [refetch, setRefetch] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/models/${id}`, {
+    fetch(`https://3d-model-server-orcin.vercel.app/models/${id}`, {
       headers: {
-        authorization:`Bearer ${user.accessToken}`,
+        authorization: `Bearer ${user.accessToken}`,
       },
     })
       .then(res => res.json())
@@ -23,7 +23,7 @@ const ModelDetails = () => {
         setData(model);
         setLoading(false);
       });
-  }, [id, user.accessToken,refetch]);
+  }, [id, user.accessToken, refetch]);
 
   const handleDelete = () => {
     Swal.fire({
@@ -36,7 +36,7 @@ const ModelDetails = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(result => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/models/${data?._id}`, {
+        fetch(`https://3d-model-server-orcin.vercel.app/models/${data?._id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -60,29 +60,30 @@ const ModelDetails = () => {
     });
   };
 
-  const handleDownload= () =>{
-
-    const finalModel ={
+  const handleDownload = () => {
+    const finalModel = {
       name: data.name,
       downloads: data.downloads,
       created_by: data.created_by,
       description: data.description,
       thumbnail: data.thumbnail,
       created_at: new Date(),
-      downloaded_by: data.email
-    }
-    fetch(`http://localhost:3000/downloads/${data._id}`,{
-      method:'POST',
-      headers:{
-        'Content-Type': 'application/json'
-      },body: JSON.stringify(finalModel)
-    }).then(res => res.json())
-    .then(model => {
-      console.log(model);
-      toast.success('Successfully downloaded')
-      setRefetch(!refetch)
+      downloaded_by: data.email,
+    };
+    fetch(`https://3d-model-server-orcin.vercel.app/${data._id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(finalModel),
     })
-  }
+      .then(res => res.json())
+      .then(model => {
+        console.log(model);
+        toast.success("Successfully downloaded");
+        setRefetch(!refetch);
+      });
+  };
   if (loading) {
     return <div>Loading....</div>;
   }
@@ -105,11 +106,11 @@ const ModelDetails = () => {
 
             <div className="flex gap-5">
               <div className="badge badge-lg badge-outline text-pink-600 border-pink-600 font-medium">
-              {data?.category}
-            </div>
-            <div className="badge badge-lg badge-outline text-pink-600 border-pink-600 font-medium">
-              {data?.downloads}
-            </div>
+                {data?.category}
+              </div>
+              <div className="badge badge-lg badge-outline text-pink-600 border-pink-600 font-medium">
+                {data?.downloads}
+              </div>
             </div>
 
             <p className="text-gray-600 leading-relaxed text-base md:text-lg">
@@ -122,7 +123,9 @@ const ModelDetails = () => {
                 className="btn btn-primary rounded-full bg-linear-to-r from-pink-500 to-red-600 text-white border-0 hover:from-pink-600 hover:to-red-700">
                 Update Model
               </Link>
-              <button onClick={handleDownload} className="btn btn-secondary hover:btn-primary transition-all rounded-full btn-outline">
+              <button
+                onClick={handleDownload}
+                className="btn btn-secondary hover:btn-primary transition-all rounded-full btn-outline">
                 Download
               </button>
               <button
